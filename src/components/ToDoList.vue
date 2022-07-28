@@ -21,6 +21,4 @@ export default {
 </script>
 
 <style scoped>
-.task-list {
-}
 </style>
