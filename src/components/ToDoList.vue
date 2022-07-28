@@ -18,8 +18,9 @@ export default {
         taskList: Array
     }
 }
-
 </script>
 
 <style scoped>
+.task-list {
+}
 </style>

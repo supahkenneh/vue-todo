@@ -1,21 +1,42 @@
 <template>
     <div class="task">
-        <div>{{ taskItem.task }}</div>
-        <div>Priority: {{ taskItem.priority }}</div>
+        <div class="task-text">{{ taskItem.task }}</div>
+        <div class="priority-container">
+            <div>Priority: </div>
+            <div class="priority-text">{{ priorityObj[taskItem.priority] }}</div>
+        </div>
     </div>
 </template>
 
 <script>
+import { priorityObj } from '../helpers/helpers'
 export default {
     name: 'Task',
-    props: { taskItem: Object }
+    props: { taskItem: Object },
+    data: () => {
+        return {
+            priorityObj
+        }
+    }
 }</script>
 
 <style scoped>
 .task {
     height: 10em;
     background-color: #242424;
-    margin: 2px auto;
-    width: 10em;
+    margin: 2em auto;
+    color: white;
+    padding: 1em 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+}
+
+.priority-container {
+    display: flex;
+}
+
+.priority-container div {
+    margin-right: 0.25em;
 }
 </style>

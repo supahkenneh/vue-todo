@@ -5,9 +5,9 @@
     <div class="content-container">
         <ToDoForm />
         <div class="task-container">
-            <ToDoList :taskList="tasks" />
-            <ToDoList :taskList="tasks" />
-            <ToDoList :taskList="tasks" />
+            <ToDoList :taskList="toDo" />
+            <ToDoList :taskList="inProgress" />
+            <ToDoList :taskList="done" />
         </div>
     </div>
 </template>
@@ -26,23 +26,33 @@ export default {
     },
     data() {
         return {
-            tasks: []
+            tasks: [],
+            toDo: [],
+            inProgress: [],
+            done: []
         }
     },
     mounted() {
         this.tasks =
             [
-                { id: 1, task: 'Buy milk', priority: 'high', status: 'todo' },
-                { id: 2, task: 'Wash car', priority: 'high', status: 'progress' },
-                { id: 3, task: 'Cook dinner', priority: 'high', status: 'done' }
-            ]
+                { id: 1, task: 'Buy milk', priority: 2, status: 'todo' },
+                { id: 2, task: 'Wash car', priority: 2, status: 'progress' },
+                { id: 3, task: 'Cook dinner', priority: 2, status: 'done' }
+            ];
+        this.toDo = this.tasks.filter((task) => task.status === 'todo');
+        this.inProgress = this.tasks.filter((task) => task.status === 'progress');
+        this.done = this.tasks.filter((task) => task.status === 'done');
+
     }
 }
 </script>
 
 <style scoped>
 .task-container {
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 0.5em;
+    height: 100vh;
+    padding: 0 1em;
 }
 </style>
