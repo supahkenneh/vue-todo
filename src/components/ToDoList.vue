@@ -13,7 +13,7 @@ import Task from './Task.vue';
 export default {
     name: 'ToDoList',
     components: {
-        Task
+        Task,
     },
     props: {
         taskList: Array,

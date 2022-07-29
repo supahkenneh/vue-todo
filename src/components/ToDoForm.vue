@@ -1,5 +1,8 @@
 <template>
-    <div class="">
+    <div v-if="!showForm">
+        <Button btnLabel="Add Task" eventString="toggle-form" @toggle-form="showForm = !showForm" />
+    </div>
+    <div v-else class="">
         <form @submit.prevent="onSubmit">
             <label for="task-name">
                 <input type="text" v-model="formTask">
@@ -26,13 +29,17 @@
 </template>
 
 <script>
+import Button from './Button.vue';
+
 export default {
     name: 'ToDoForm',
+    components: { Button },
     data() {
         return {
             formTask: '',
             formPriority: '',
-            formStatus: ''
+            formStatus: '',
+            showForm: false,
         }
     },
     methods: {

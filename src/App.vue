@@ -3,9 +3,8 @@
         <Header />
     </nav>
     <div class="d-flex flex-column">
-        <div class="d-flex justify-content-end">
-            <button>Add Task</button>
-            <!-- <ToDoForm @submit-task="submitTask" /> -->
+        <div class="d-flex justify-content-start">
+            <ToDoForm @submit-task="submitTask" />
         </div>
         <div class="d-flex justify-content-evenly">
             <ToDoList :taskList="toDoObj.tasks" :label="toDoObj.label" />
@@ -34,7 +33,7 @@ export default {
             tasks: [],
             toDoObj: { label: 'To Do', tasks: [] },
             inProgressObj: { label: 'In Progress', tasks: [] },
-            doneObj: { label: 'Done', tasks: [] }
+            doneObj: { label: 'Done', tasks: [] },
         }
     },
     async mounted() {

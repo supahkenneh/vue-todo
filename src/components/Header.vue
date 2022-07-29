@@ -1,5 +1,5 @@
 <template>
-    <h1 class="navbar-brand text-white fs-1">Vue To-Do</h1>
+    <h1 class="navbar-brand text-white fs-1 ps-3">Vue To-Do</h1>
 </template>
 
 <script>
