@@ -34,15 +34,8 @@ export default {
         }
     },
     async mounted() {
-        const response = await axios.get('http://localhost:8080/')
-        console.log(response);
-
-        this.tasks =
-            [
-                // { id: 1, task: 'Buy milk', priority: 2, status: 'todo' },
-                // { id: 2, task: 'Wash car', priority: 2, status: 'progress' },
-                // { id: 3, task: 'Cook dinner', priority: 2, status: 'done' }
-            ];
+        const response = await axios.get('http://localhost:8080/tasks')
+        this.tasks = [...response.data.payload];
         this.toDo = this.tasks.filter((task) => task.status === 'todo');
         this.inProgress = this.tasks.filter((task) => task.status === 'progress');
         this.done = this.tasks.filter((task) => task.status === 'done');

@@ -3,19 +3,17 @@
         <div class="task-text">{{ taskItem.task }}</div>
         <div class="priority-container">
             <div>Priority: </div>
-            <div class="priority-text">{{ priorityLabels[taskItem.priority] }}</div>
+            <div class="priority-text">{{ taskItem.priority }}</div>
         </div>
     </div>
 </template>
 
 <script>
-import { priorityLabels } from '../helpers/helpers'
 export default {
     name: 'Task',
     props: { taskItem: Object },
     data: () => {
         return {
-            priorityLabels
         }
     }
 }</script>
