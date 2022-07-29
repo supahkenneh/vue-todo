@@ -6,9 +6,9 @@
             </label>
             <label for="priority">
                 <select name="priority" id="priority" v-model="formPriority">
-                    <option v-for="label in priorityLabels">
-                        {{ label }}
-                    </option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
                 </select>
             </label>
             <div>
@@ -19,12 +19,10 @@
 </template>
 
 <script>
-import { priorityLabels } from '../helpers/helpers'
 export default {
     name: 'ToDoForm',
     data: () => {
         return {
-            priorityLabels,
             formTask: '',
             formPriority: ''
         }

@@ -11,12 +11,9 @@
 <script>
 export default {
     name: 'Task',
-    props: { taskItem: Object },
-    data: () => {
-        return {
-        }
-    }
-}</script>
+    props: { taskItem: Object }
+}
+</script>
 
 <style scoped>
 .task {
