@@ -1,7 +1,7 @@
 require('dotenv').config();
 const initializeApp = require('firebase/app').initializeApp;
 const firebase = require('firebase/database');
-const { get, ref, child, getDatabase } = firebase;
+const { get, ref, child, getDatabase, set } = firebase;
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_APIKEY,
     authDomain: process.env.FIREBASE_AUTHDOMAIN,
@@ -22,14 +22,14 @@ const bodyParser = require('body-parser');
 
 const PORT = process.env.PORT || 8080;
 const server = express();
-let db = getDatabase();
+const db = getDatabase();
+const dbRef = ref(getDatabase())
 
 server.use(cors());
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
 
 server.get('/tasks', (req, res) => {
-    const dbRef = ref(getDatabase())
     get(child(dbRef, '/tasks'))
         .then(response => {
             if (response.exists()) {
@@ -46,13 +46,24 @@ server.get('/tasks', (req, res) => {
             console.log('error: ', err);
         })
 });
-// let randomId = Math.floor(Math.random() * 1000);
-// firebase.set(firebase.ref(db, `/tasks/${randomId}`), {
-//     id: randomId,
-//     task: 'Cook dinner',
-//     priority: 'High',
-//     status: 'done',
-// });
+
+server.post('/tasks', (req, res) => {
+    const { task, priority, status } = req.body;
+    let randomId = Math.floor(Math.random() * 1000);
+    set(ref(db, `/tasks/${randomId}`), {
+        id: randomId,
+        task,
+        priority,
+        status
+    })
+        .then(() => {
+            return res.json({ success: true })
+        })
+        .catch(err => {
+            console.log(err);
+            return res.json({ success: false })
+        })
+})
 
 server.listen(PORT, () => {
     console.log(`Server started on port: ${PORT}`);

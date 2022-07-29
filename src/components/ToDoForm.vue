@@ -1,6 +1,6 @@
 <template>
     <div class="form">
-        <form @submit="onSubmit">
+        <form @submit.prevent="onSubmit">
             <label for="task-name">
                 <input type="text" v-model="formTask">
             </label>
@@ -11,6 +11,13 @@
                     <option value="Low">Low</option>
                 </select>
             </label>
+            <label for="status">
+                <select name="status" id="status" v-model="formStatus">
+                    <option value="todo">To Do</option>
+                    <option value="progress">In Progress</option>
+                    <option value="done">Done</option>
+                </select>
+            </label>
             <div>
                 <button>Submit</button>
             </div>
@@ -19,17 +26,29 @@
 </template>
 
 <script>
+import { post } from 'axios';
+import { POST_TASKS_URL } from '../helpers/apiRoutes';
+
 export default {
     name: 'ToDoForm',
-    data: () => {
+    data() {
         return {
             formTask: '',
-            formPriority: ''
+            formPriority: '',
+            formStatus: ''
         }
     },
     methods: {
-        onSubmit: e => {
-            e.preventDefault();
+        onSubmit() {
+            this.postTask({ task: this.formTask, priority: this.formPriority, status: this.formStatus })
+                .then(response => {
+                    if (response.data.success) {
+                        // need to refetch tasks
+                    }
+                })
+        },
+        postTask: async (task) => {
+            return post(POST_TASKS_URL, task)
         }
     }
 }</script>
