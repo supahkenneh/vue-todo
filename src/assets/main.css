@@ -1,8 +1,7 @@
 @import './base.css';
 
 #app {
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   font-weight: normal;
-  background-color: #B6CEE2;
 }

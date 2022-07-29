@@ -1,12 +1,13 @@
 <template>
-    <div class="container">
+    <nav class="navbar navbar-expand-xxl bg-primary">
         <Header />
-    </div>
-    <div class="content-container">
-        <div class="form-container">
-            <ToDoForm @submit-task="submitTask" />
+    </nav>
+    <div class="d-flex flex-column">
+        <div class="d-flex justify-content-end">
+            <button>Add Task</button>
+            <!-- <ToDoForm @submit-task="submitTask" /> -->
         </div>
-        <div class="task-container">
+        <div class="d-flex justify-content-evenly">
             <ToDoList :taskList="toDoObj.tasks" :label="toDoObj.label" />
             <ToDoList :taskList="inProgressObj.tasks" :label="inProgressObj.label" />
             <ToDoList :taskList="doneObj.tasks" :label="doneObj.label" />
@@ -68,11 +69,4 @@ export default {
 </script>
 
 <style scoped>
-.task-container {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    column-gap: 0.5em;
-    height: 100vh;
-    padding: 0 1em;
-}
 </style>

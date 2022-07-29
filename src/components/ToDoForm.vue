@@ -1,5 +1,5 @@
 <template>
-    <div class="form">
+    <div class="">
         <form @submit.prevent="onSubmit">
             <label for="task-name">
                 <input type="text" v-model="formTask">
@@ -43,23 +43,9 @@ export default {
                 status: this.formStatus
             };
             this.$emit('submit-task', taskObj);
-            // this.postTask({ task: this.formTask, priority: this.formPriority, status: this.formStatus })
-            //     .then(response => {
-            //         if (response.data.success) {
-            //             // need to refetch tasks
-            //         }
-            //     })
         }
     }
 }</script>
 
 <style scoped>
-.form {
-    width: 50%;
-}
-
-.form form {
-    display: flex;
-    flex-direction: column;
-}
 </style>
