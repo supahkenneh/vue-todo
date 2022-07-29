@@ -1,7 +1,7 @@
 <template>
-    <div class="">
-        <h1>{{ label }}</h1>
-        <div v-for="task in taskList">
+    <div class="container vh-100">
+        <h1 class="fs-2">{{ label }}</h1>
+        <div class="mb-3" v-for="task in taskList">
             <Task :taskItem="task" />
         </div>
     </div>

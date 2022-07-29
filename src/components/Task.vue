@@ -1,9 +1,12 @@
 <template>
-    <div class="">
-        <div class="">{{ taskItem.task }}</div>
-        <div class="">
-            <div>Priority: </div>
-            <div class="">{{ taskItem.priority }}</div>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ taskItem.task }}</h5>
+            <div class="card-text">
+                <div>Priority:
+                    <span class="">{{ taskItem.priority }}</span>
+                </div>
+            </div>
         </div>
     </div>
 </template>
