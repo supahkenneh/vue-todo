@@ -3,11 +3,13 @@
         <Header />
     </div>
     <div class="content-container">
-        <ToDoForm @submit-task="submitTask" />
+        <div class="form-container">
+            <ToDoForm @submit-task="submitTask" />
+        </div>
         <div class="task-container">
-            <ToDoList :taskList="toDo" />
-            <ToDoList :taskList="inProgress" />
-            <ToDoList :taskList="done" />
+            <ToDoList :taskList="toDoObj.tasks" :label="toDoObj.label" />
+            <ToDoList :taskList="inProgressObj.tasks" :label="inProgressObj.label" />
+            <ToDoList :taskList="doneObj.tasks" :label="doneObj.label" />
         </div>
     </div>
 </template>
@@ -29,13 +31,13 @@ export default {
     data() {
         return {
             tasks: [],
-            toDo: [],
-            inProgress: [],
-            done: []
+            toDoObj: { label: 'To Do', tasks: [] },
+            inProgressObj: { label: 'In Progress', tasks: [] },
+            doneObj: { label: 'Done', tasks: [] }
         }
     },
     async mounted() {
-        // get tasks from server (async) and assign to component's data
+        // get tasks from server and assign to component's data
         this.getTasks(this.tasks);
     },
     methods: {
@@ -43,9 +45,9 @@ export default {
         async getTasks(taskArr) {
             const getTasksResponse = await get(GET_TASKS_URL);
             taskArr = [...getTasksResponse.data.payload];
-            this.toDo = this.filterTasks(taskArr, 'todo');
-            this.inProgress = this.filterTasks(taskArr, 'progress');
-            this.done = this.filterTasks(taskArr, 'done');
+            this.toDoObj.tasks = this.filterTasks(taskArr, 'todo');
+            this.inProgressObj.tasks = this.filterTasks(taskArr, 'progress');
+            this.doneObj.tasks = this.filterTasks(taskArr, 'done');
         },
         // handle submit
         async submitTask(task) {

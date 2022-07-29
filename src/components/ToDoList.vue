@@ -1,5 +1,6 @@
 <template>
     <div class='task-list'>
+        <h1>{{ label }}</h1>
         <div v-for="task in taskList">
             <Task :taskItem="task" />
         </div>
@@ -15,10 +16,15 @@ export default {
         Task
     },
     props: {
-        taskList: Array
+        taskList: Array,
+        label: String
     }
 }
 </script>
 
 <style scoped>
+h1 {
+    /* text-align: center; */
+    font-weight: bold;
+}
 </style>
