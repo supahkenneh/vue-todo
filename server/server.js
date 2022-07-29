@@ -60,7 +60,6 @@ server.post('/tasks', (req, res) => {
             return res.json({ success: true })
         })
         .catch(err => {
-            console.log(err);
             return res.json({ success: false })
         })
 })

@@ -3,7 +3,7 @@
         <Header />
     </div>
     <div class="content-container">
-        <ToDoForm />
+        <ToDoForm @submit-task="submitTask" />
         <div class="task-container">
             <ToDoList :taskList="toDo" />
             <ToDoList :taskList="inProgress" />
@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import { get } from 'axios';
+import { get, post } from 'axios';
 import Header from './components/Header.vue';
 import ToDoList from './components/ToDoList.vue';
 import ToDoForm from './components/ToDoForm.vue';
-import { GET_TASKS_URL } from './helpers/apiRoutes';
+import { GET_TASKS_URL, POST_TASKS_URL } from './helpers/apiRoutes';
 
 export default {
     name: 'App',
@@ -35,20 +35,27 @@ export default {
         }
     },
     async mounted() {
-        // get tasks from server (async) and assign to component's data.task
-        const getTasksResponse = await this.getTasks();
-        this.tasks = [...getTasksResponse.data.payload];
-
-        // filter all tasks by status
-        this.toDo = this.filterTasks(this.tasks, 'todo');
-        this.inProgress = this.filterTasks(this.tasks, 'progress');
-        this.done = this.filterTasks(this.tasks, 'done');
-
+        // get tasks from server (async) and assign to component's data
+        this.getTasks(this.tasks);
     },
     methods: {
         // gets all tasks from server
-        getTasks: async () => {
-            return get(GET_TASKS_URL)
+        async getTasks(taskArr) {
+            const getTasksResponse = await get(GET_TASKS_URL);
+            taskArr = [...getTasksResponse.data.payload];
+            this.toDo = this.filterTasks(taskArr, 'todo');
+            this.inProgress = this.filterTasks(taskArr, 'progress');
+            this.done = this.filterTasks(taskArr, 'done');
+        },
+        // handle submit
+        async submitTask(task) {
+            const postTaskResponse = await post(POST_TASKS_URL, task);
+            // refetch data
+            if (postTaskResponse.data.success)
+                this.getTasks(this.tasks);
+            else {
+                // need to handle failed post
+            }
         },
         // helper function - filters tasks by status
         filterTasks: (taskArr, type) => {

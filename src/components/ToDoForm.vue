@@ -26,9 +26,6 @@
 </template>
 
 <script>
-import { post } from 'axios';
-import { POST_TASKS_URL } from '../helpers/apiRoutes';
-
 export default {
     name: 'ToDoForm',
     data() {
@@ -40,15 +37,18 @@ export default {
     },
     methods: {
         onSubmit() {
-            this.postTask({ task: this.formTask, priority: this.formPriority, status: this.formStatus })
-                .then(response => {
-                    if (response.data.success) {
-                        // need to refetch tasks
-                    }
-                })
-        },
-        postTask: async (task) => {
-            return post(POST_TASKS_URL, task)
+            const taskObj = {
+                task: this.formTask,
+                priority: this.formPriority,
+                status: this.formStatus
+            };
+            this.$emit('submit-task', taskObj);
+            // this.postTask({ task: this.formTask, priority: this.formPriority, status: this.formStatus })
+            //     .then(response => {
+            //         if (response.data.success) {
+            //             // need to refetch tasks
+            //         }
+            //     })
         }
     }
 }</script>
