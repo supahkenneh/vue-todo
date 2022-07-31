@@ -1,7 +1,5 @@
 <template>
-    <div class="container my-2">
-        <button type="button" class="btn btn-primary" @click="$emit(eventString)">{{ btnLabel }}</button>
-    </div>
+    <button type="button" :class="classes" @click="$emit(eventString)">{{ btnLabel }}</button>
 </template>
 
 <script>
@@ -9,7 +7,8 @@ export default {
     name: 'Button',
     props: {
         btnLabel: String,
-        eventString: String
+        eventString: String,
+        classes: String
     }
 }
 </script>

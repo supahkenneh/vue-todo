@@ -3,7 +3,7 @@
         <Header />
     </nav>
     <div class="d-flex flex-column">
-        <div class="d-flex justify-content-start">
+        <div class="w-100 d-flex">
             <ToDoForm @submit-task="submitTask" />
         </div>
         <div class="d-flex justify-content-evenly">
