@@ -1,7 +1,7 @@
 <template>
     <div class="card w-75">
         <div class="card-body d-flex justify-content-between">
-            <div class="d-flex flex-column" v-if="!isEditing">
+            <div class="d-flex flex-column" v-if="!isEditing && !isDeleting">
                 <h5 class="card-title">{{ taskItem.task }}</h5>
                 <div class="card-text">
                     <div>Priority:
@@ -9,7 +9,7 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex flex-column" v-else>
+            <div class="d-flex flex-column" v-if="isEditing">
                 <form @submit.prevent="toggleEdit('edit')">
                     <label for="task-name" class="form-label">Task</label>
                     <input type="text" class="form-control" v-model="formTask">
@@ -21,13 +21,18 @@
                     </select>
                 </form>
             </div>
-            <div class="d-flex w-25 justify-content-end" v-if="!isEditing">
-                <div class="mx-1 card-button fs-5" @click="toggleEdit('toggle')">✏️</div>
-                <div class="mx-1 card-button fs-5">🗑️</div>
+            <div v-if="isDeleting">
+                <h5>Remove '{{ taskItem.task }}'?</h5>
             </div>
-            <div v-else class="d-flex w-25 justify-content-evenly">
-                <div class="mx-1 card-button fs-5" @click="toggleEdit('edit')">✔️</div>
-                <div class="mx-1 card-button fs-5" @click="toggleEdit('cancel')">❌</div>
+            <div class="d-flex w-25 justify-content-end" v-if="!isEditing && !isDeleting">
+                <div class="mx-1 card-button fs-5" @click="toggleEdit('toggle')">✏️</div>
+                <div class="mx-1 card-button fs-5" @click="toggleDelete('toggle')">🗑️</div>
+            </div>
+            <div v-if="isEditing || isDeleting" class="d-flex w-25 justify-content-evenly">
+                <div class="mx-1 card-button fs-5" @click="isEditing ? toggleEdit('edit') : toggleDelete('delete')">✔️
+                </div>
+                <div class="mx-1 card-button fs-5" @click="isEditing ? toggleEdit('cancel') : toggleDelete('cancel')">❌
+                </div>
             </div>
         </div>
     </div>
@@ -40,6 +45,7 @@ export default {
     data() {
         return {
             isEditing: false,
+            isDeleting: false,
             formTask: '',
             formPriority: '',
             formStatus: ''
@@ -65,6 +71,21 @@ export default {
                     break;
                 case 'cancel':
                     this.isEditing = !this.isEditing;
+                    break;
+                default:
+                    break;
+            }
+        },
+        toggleDelete(action) {
+            switch (action) {
+                case 'delete':
+                    this.$emit('delete-task', this.taskItem.id);
+                    break;
+                case 'toggle':
+                    this.isDeleting = !this.isDeleting;
+                    break;
+                case 'cancel':
+                    this.isDeleting = !this.isDeleting;
                     break;
                 default:
                     break;

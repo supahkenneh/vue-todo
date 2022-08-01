@@ -5,7 +5,7 @@
     </div>
     <div v-else class="container py-2 m-0">
         <div class="mx-1">
-            <h3>{{ editForm ? 'Edit Task ✏️' : 'Create Task ✍' }}</h3>
+            <h3>Create Task ✍</h3>
         </div>
         <form @submit.prevent="onSubmit" class="w-50">
             <div class="mb-3 mx-1">
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="d-flex w-25">
-                <Button btnLabel="Create" classes="btn btn-primary m-1" @click="onSubmit" />
+                <button class="btn btn-primary m-1">Create</button>
                 <Button btnLabel="Cancel" classes="btn btn-secondary m-1" eventString="toggle-form"
                     @toggle-form="showForm = !showForm" @click="clearForm" />
             </div>
@@ -62,6 +62,9 @@ export default {
                 status: this.formStatus
             };
             this.$emit('submit-task', taskObj);
+            this.formTask = '';
+            this.formPriority = '';
+            this.formStatus = '';
         },
         clearForm() {
             this.formTask = '';

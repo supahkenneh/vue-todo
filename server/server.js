@@ -19,6 +19,7 @@ const database = getDatabase(app);
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const { remove } = require('firebase/database');
 
 const PORT = process.env.PORT || 8080;
 const server = express();
@@ -68,6 +69,16 @@ server.put(`/tasks/:id`, (req, res) => {
     const updates = {};
     updates[`/tasks/${req.params.id}`] = req.body;
     update(ref(db), updates)
+        .then(() => {
+            return res.json({ success: true })
+        })
+        .catch(err => {
+            return res.json({ success: false })
+        })
+});
+
+server.delete(`/tasks/:id`, (req, res) => {
+    remove(ref(db, `/tasks/${req.params.id}`))
         .then(() => {
             return res.json({ success: true })
         })
