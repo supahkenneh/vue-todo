@@ -62,6 +62,12 @@ export default {
         },
         async handleEdit(task) {
             const editTaskResponse = await put(`${PUT_TASKS_URL}${task.id}`, task);
+
+            if (editTaskResponse.data.success) {
+                this.getTasks(this.tasks);
+            } else {
+
+            }
         },
         // helper function - filters tasks by status
         filterTasks: (taskArr, type) => {

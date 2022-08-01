@@ -1,7 +1,7 @@
 require('dotenv').config();
 const initializeApp = require('firebase/app').initializeApp;
 const firebase = require('firebase/database');
-const { get, ref, child, getDatabase, set } = firebase;
+const { get, ref, child, getDatabase, set, update } = firebase;
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_APIKEY,
     authDomain: process.env.FIREBASE_AUTHDOMAIN,
@@ -65,7 +65,15 @@ server.post('/tasks', (req, res) => {
 });
 
 server.put(`/tasks/:id`, (req, res) => {
-    console.log(req.params.id);
+    const updates = {};
+    updates[`/tasks/${req.params.id}`] = req.body;
+    update(ref(db), updates)
+        .then(() => {
+            return res.json({ success: true })
+        })
+        .catch(err => {
+            return res.json({ success: false })
+        })
 })
 
 server.listen(PORT, () => {

@@ -51,11 +51,12 @@ export default {
                 case 'edit':
                     const editTaskObj = {
                         id: this.taskItem.id,
-                        task: this.formTask,
-                        priority: this.formPriority,
-                        status: this.formStatus
+                        task: this.formTask ? this.formTask : this.taskItem.task,
+                        priority: this.formPriority ? this.formPriority : this.taskItem.status,
+                        status: this.formStatus ? this.formStatus : this.taskItem.status
                     }
                     this.$emit('edit-task', editTaskObj);
+                    this.isEditing = !this.isEditing;
                     break;
                 case 'toggle':
                     this.formTask = this.taskItem.task;
