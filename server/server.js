@@ -62,6 +62,10 @@ server.post('/tasks', (req, res) => {
         .catch(err => {
             return res.json({ success: false })
         })
+});
+
+server.put(`/tasks/:id`, (req, res) => {
+    console.log(req.params.id);
 })
 
 server.listen(PORT, () => {

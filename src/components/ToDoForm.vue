@@ -5,7 +5,7 @@
     </div>
     <div v-else class="container py-2 m-0">
         <div class="mx-1">
-            <h3>Create Task</h3>
+            <h3>{{ editForm ? 'Edit Task ✏️' : 'Create Task ✍' }}</h3>
         </div>
         <form @submit.prevent="onSubmit" class="w-50">
             <div class="mb-3 mx-1">
@@ -51,6 +51,7 @@ export default {
             formPriority: '',
             formStatus: '',
             showForm: false,
+            editForm: false,
         }
     },
     methods: {
@@ -66,7 +67,7 @@ export default {
             this.formTask = '';
             this.formPriority = '';
             this.formStatus = '';
-        }
+        },
     }
 }</script>
 

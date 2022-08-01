@@ -7,19 +7,19 @@
             <ToDoForm @submit-task="submitTask" />
         </div>
         <div class="d-flex justify-content-evenly">
-            <ToDoList :taskList="toDoObj.tasks" :label="toDoObj.label" />
-            <ToDoList :taskList="inProgressObj.tasks" :label="inProgressObj.label" />
-            <ToDoList :taskList="doneObj.tasks" :label="doneObj.label" />
+            <ToDoList :taskList="toDoObj.tasks" :label="toDoObj.label" @edit-task="handleEdit" />
+            <ToDoList :taskList="inProgressObj.tasks" :label="inProgressObj.label" @edit-task="handleEdit" />
+            <ToDoList :taskList="doneObj.tasks" :label="doneObj.label" @edit-task="handleEdit" />
         </div>
     </div>
 </template>
 
 <script>
-import { get, post } from 'axios';
+import { get, post, put } from 'axios';
 import Header from './components/Header.vue';
 import ToDoList from './components/ToDoList.vue';
 import ToDoForm from './components/ToDoForm.vue';
-import { GET_TASKS_URL, POST_TASKS_URL } from './helpers/apiRoutes';
+import { GET_TASKS_URL, POST_TASKS_URL, PUT_TASKS_URL } from './helpers/apiRoutes';
 
 export default {
     name: 'App',
@@ -38,7 +38,7 @@ export default {
     },
     async mounted() {
         // get tasks from server and assign to component's data
-        this.getTasks(this.tasks);
+        this.tasks = await this.getTasks(this.tasks);
     },
     methods: {
         // gets all tasks from server
@@ -48,6 +48,7 @@ export default {
             this.toDoObj.tasks = this.filterTasks(taskArr, 'todo');
             this.inProgressObj.tasks = this.filterTasks(taskArr, 'progress');
             this.doneObj.tasks = this.filterTasks(taskArr, 'done');
+            return taskArr;
         },
         // handle submit
         async submitTask(task) {
@@ -58,6 +59,9 @@ export default {
             else {
                 // need to handle failed post
             }
+        },
+        async handleEdit(task) {
+            const editTaskResponse = await put(`${PUT_TASKS_URL}${task.id}`, task);
         },
         // helper function - filters tasks by status
         filterTasks: (taskArr, type) => {

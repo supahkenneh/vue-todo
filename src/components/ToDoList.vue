@@ -2,7 +2,7 @@
     <div class="container vh-100">
         <h1 class="fs-2">{{ label }}</h1>
         <div class="mb-3" v-for="task in taskList">
-            <Task :taskItem="task" />
+            <Task :taskItem="task" @edit-task="handleEdit" />
         </div>
     </div>
 </template>
@@ -18,6 +18,11 @@ export default {
     props: {
         taskList: Array,
         label: String
+    },
+    methods: {
+        handleEdit(task) {
+            this.$emit('edit-task', task);
+        }
     }
 }
 </script>
