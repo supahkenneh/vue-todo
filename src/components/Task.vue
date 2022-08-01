@@ -19,6 +19,12 @@
                         <option value="Medium">Medium</option>
                         <option value="Low">Low</option>
                     </select>
+                    <label for="task-status" class="form-label">Status</label>
+                    <select name="status" id="status" class="form-select" v-model="formStatus">
+                        <option value="todo">To Do</option>
+                        <option value="progress">In Progress</option>
+                        <option value="done">Done</option>
+                    </select>
                 </form>
             </div>
             <div v-if="isDeleting">
@@ -67,6 +73,7 @@ export default {
                 case 'toggle':
                     this.formTask = this.taskItem.task;
                     this.formPriority = this.taskItem.priority;
+                    this.formStatus = this.taskItem.status;
                     this.isEditing = !this.isEditing;
                     break;
                 case 'cancel':
